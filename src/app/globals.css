@@ -6,15 +6,15 @@
     "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
 
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --background-start-rgb: 100, 100, 100;
+  --background-end-rgb: 100, 100, 100;
 
   --primary-glow: conic-gradient(
     from 180deg at 50% 50%,
     #16abff33 0deg,
     #0885ff33 55deg,
     #54d6ff33 120deg,
-    #0071ff33 160deg,
+    #ee961333 160deg,
     transparent 360deg
   );
   --secondary-glow: radial-gradient(
@@ -49,9 +49,9 @@
     --primary-glow: radial-gradient(rgba(1, 65, 255, 0.4), rgba(1, 65, 255, 0));
     --secondary-glow: linear-gradient(
       to bottom right,
-      rgba(1, 65, 255, 0),
-      rgba(1, 65, 255, 0),
-      rgba(1, 65, 255, 0.3)
+      rgba(255, 148, 232, 0),
+      rgba(255, 160, 36, 0),
+      rgba(223, 188, 92, 0.3)
     );
 
     --tile-start-rgb: 2, 13, 46;
@@ -87,17 +87,13 @@ body {
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  font-family: Roboto, Helvetica, Arial, sans-serif;
 }
 
 a {
   color: inherit;
-  text-decoration: none;
+  text-decoration: none !important;
+  cursor: pointer !important;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -105,3 +101,11 @@ a {
     color-scheme: dark;
   }
 }
+
+  
+
+
+
+
+
+@import '../../public/styles/main.css';
