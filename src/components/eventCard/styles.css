@@ -1,0 +1,16 @@
+h1{
+   font-size: 3rem;
+   font-weight: bold;
+}
+
+p{
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: .5px;
+}
+
+h6{
+  font-size: 0.9rem;
+   font-weight: 200;
+   color:rgb(73, 73, 73);
+}

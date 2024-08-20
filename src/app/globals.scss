@@ -1,0 +1,16 @@
+@import '../../public/styles/main.css';
+
+
+@import "~bootstrap/scss/bootstrap";
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+//@import "/node_modules/bootstrap/scss/bootstrap.scss"
+ 
+
+
+a{
+    cursor: pointer !important;
+}
+
+.card{
+    border: none !important;
+}
