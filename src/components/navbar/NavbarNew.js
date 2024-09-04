@@ -1,4 +1,4 @@
-import Link from 'next/Link';
+import Link from 'next/link';
 import { Image } from 'react-bootstrap';
 import CustomDropdown from '@/components/navbar/CustomDropdown';
 import ToggleButton from '@/components/navbar/ToggleButton';
