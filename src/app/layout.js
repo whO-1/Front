@@ -5,8 +5,6 @@ import Script from "next/script";
 
 
 
-
-
 export const metadata = {
   title: "EventPlanner",
   description: "Application for finding events",
@@ -25,6 +23,7 @@ export default function RootLayout({ children }) {
             <meta content="" name="description"/>
             <meta content="" name="keywords"/>
             <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet"/>
+            <link href="assets/vendor/aos/aos.css" rel="stylesheet"/>
 
         </head>
         <body >

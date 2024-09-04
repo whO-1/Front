@@ -22,7 +22,7 @@
   --background-color: #ffffff; /* Background color for the entire website, including individual sections */
   --default-color: #020202; /* Default color used for the majority of the text content across the entire website */
   --heading-color: #10152c; /* Color for headings, subheadings and title throughout the website */
-  --accent-color: rgb(175, 198, 28); /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
+  --accent-color: #afc61c; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
   --surface-color: #ffffff; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
   --contrast-color: rgb(255, 255, 255); /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
 }
@@ -30,11 +30,11 @@
 /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
 :root {
   --nav-color: rgb(255, 255, 255);  /* The default color of the main navmenu links */
-  --nav-hover-color: rgb(175, 198, 28); /* Applied to main navmenu links when they are hovered over or active */
+  --nav-hover-color: #afc61c; /* Applied to main navmenu links when they are hovered over or active */
   --nav-mobile-background-color: rgb(255, 255, 255); /* Used as the background color for mobile navigation menu */
   --nav-dropdown-background-color: #ffffff; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
   --nav-dropdown-color: #212529; /* Used for navigation links of the dropdown items in the navigation menu. */
-  --nav-dropdown-hover-color: rgb(175, 198, 28); /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
+  --nav-dropdown-hover-color: #afc61c; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
   scroll-behavior: smooth;
 }
 
@@ -1077,7 +1077,7 @@ section,
 /*--------------------------------------------------------------
 # Services Section
 --------------------------------------------------------------*/
-.services .card {
+ .card {
   background-color: var(--surface-color);
   color: var(--default-color);
   border: 1px solid color-mix(in srgb, var(--default-color), transparent 85%);
@@ -1086,17 +1086,17 @@ section,
   height: 100%;
 }
 
-.services .card .card-img {
+ .card .card-img {
   overflow: hidden;
   margin-bottom: 15px;
   border-radius: 0;
 }
 
-.services .card .card-img img {
+ .card .card-img img {
   transition: 0.3s ease-in-out;
 }
 
-.services .card h3 {
+ .card h3 {
   font-weight: 700;
   font-size: 18px;
   margin-bottom: 5px;
@@ -1104,23 +1104,23 @@ section,
   text-transform: uppercase;
 }
 
-.services .card a {
+ .card a {
   color: var(--heading-color);
   transition: 0.3;
 }
 
-.services .card a:hover {
+ .card a:hover {
   color: var(--accent-color) !important;
 }
 
-.services .card p {
+.card p {
   padding: 0 30px;
   margin-bottom: 30px;
   color: color-mix(in srgb, var(--default-color), transparent 40%);
   font-size: 15px;
 }
 
-.services .card:hover .card-img img {
+ .card:hover .card-img img {
   transform: scale(1.1);
 }
 
@@ -1472,6 +1472,7 @@ section,
 /*--------------------------------------------------------------
 # Faq Section
 --------------------------------------------------------------*/
+
 .faq .faq-container {
   margin-top: 15px;
 }

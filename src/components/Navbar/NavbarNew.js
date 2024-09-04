@@ -17,6 +17,7 @@ export default function NavbarNew({ data }) {
         : 
             null;
 
+    
     return (
         <>
             <header id="header" className="header d-flex align-items-center fixed-top">
@@ -38,7 +39,7 @@ export default function NavbarNew({ data }) {
                                             }}/>
                                         : 
                                             <li key={el.Id}>
-                                                <a href={el.LinkUrl}>{el.LinkTitle}</a>
+                                                <a href={el.LinkUrl||""}>{el.LinkTitle||""}</a>
                                             </li>
                                     ))
                                 :

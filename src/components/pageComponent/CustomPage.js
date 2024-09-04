@@ -6,12 +6,13 @@ export default function CustomPage({ children , data } ){
     return (
         <>
             <NavbarNew data = {data} />
-
-            {children}
-
-            <div className="d-flex flex-column justify-content-end " style={{height:"100vh"}} >
-                <CustomFooter/>
+            
+            <div style={{minHeight:"120vh"}}>
+                {children}
             </div>
+            
+            <CustomFooter/>
+          
         </>
     );
 }

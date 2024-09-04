@@ -1,13 +1,85 @@
+"use client"
+
 import {Image } from "react-bootstrap";
 import LoadComponentExtension from "@/extensions/LoadComponentExtension";
 import CardsGallery from "@/components/gallery/CardsGallery";
 import CardsGallerySkeleton from "@/components/gallery/CardsGallerySkeleton";
 import CategoryCard from "@/components/cards/CategoryCard";
-import DropdownTextCard from "@/components/cards/DropdownTextCard";
+import AccordionCard from "@/components/cards/AccordionCard";
+import AccordionGallerySkeleton from "@/components/gallery/AccordionGallerySkeleton";
+import CustomForm from "../forms/CustomForm";
+import { useEffect } from "react";
 
 const adminUrl = process.env.NEXT_PUBLIC_ADMIN_URL;
+import AOS from 'aos';
+
 
 export default function MainComponent(){
+
+    function typeTextAndAnimateLastWord(elementId, text, lastWords, typingSpeed = 100, wordChangeSpeed = 1000) {
+        const element = document.getElementById(elementId);
+        let index = 0;
+        let lastWordIndex = 0;
+        let currentWord = '';
+        let typingLastWord = true;
+        let wordCharIndex = 0;
+        
+        function typeNextChar() {
+            if (index < text.length) {
+                element.innerHTML += text.charAt(index);
+                index++;
+                setTimeout(typeNextChar, typingSpeed);
+            } else {
+                typeOrEraseLastWord();
+            }
+        }
+
+        function typeOrEraseLastWord() {
+            const textWithoutLastWord = text.substring(0, text.lastIndexOf(" ") + 1);
+            if (typingLastWord) {
+                if (wordCharIndex < lastWords[lastWordIndex].length) {
+                    currentWord += lastWords[lastWordIndex].charAt(wordCharIndex);
+                    wordCharIndex++;
+                    element.innerHTML = textWithoutLastWord + `<span class="text-success" style="font-size: larger; font-weight: bold;">${currentWord}</span>`;
+                    setTimeout(typeOrEraseLastWord, typingSpeed);
+                } else {
+                    setTimeout(() => {
+                        typingLastWord = false;
+                        typeOrEraseLastWord();
+                    }, wordChangeSpeed);
+                }
+            } else {
+                if (wordCharIndex > 0) {
+                    wordCharIndex--;
+                    currentWord = currentWord.slice(0, wordCharIndex);
+                    element.innerHTML = textWithoutLastWord + `<span class="text-success" style="font-size: larger; font-weight: bold;">${currentWord}</span>`;
+                    setTimeout(typeOrEraseLastWord, typingSpeed);
+                } else {
+                    lastWordIndex = (lastWordIndex + 1) % lastWords.length;
+                    typingLastWord = true;
+                    typeOrEraseLastWord();
+                }
+            }
+        }
+        element.innerHTML = '';
+        typeNextChar();
+    }
+
+    useEffect(() => {
+        AOS.init({
+            duration: 600,
+            easing: 'ease-in-out',
+            once: true,
+            mirror: false
+        });
+
+        typeTextAndAnimateLastWord(
+          'animatedText', 
+          `This is a universal community for everyone around the world. Use our application to find your favourite  :`, 
+          ['Event . . .','Location . . .', 'Friends . . .', 'Feelings . . .', 'Vibe . . .'], 
+          50, 1400
+      );
+    }, []);
 
     return(
         <main className="main">
@@ -19,15 +91,11 @@ export default function MainComponent(){
                 <div className="row gy-4 d-flex justify-content-between">
                   <div className="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
                     <h2 data-aos="fade-up " className="text-light">Make some plans with EventPlanner.</h2>
-                    <p data-aos="fade-up" data-aos-delay="100" className="text-light" style={{letterSpacing: "0.05rem"}} >This is a universal community for everyone. Apply the filters and <b className="text-success">find Your favourite activity!</b> If you are interested in a particular event take a search:</p>
+                    <p id="animatedText" data-aos="fade-up" data-aos-delay="100" className="text-light" style={{letterSpacing: "0.05rem"}} >This is a universal community for everyone. Apply the filters and <b className="text-success">find Your favourite activity!</b> If you are interested in a particular event take a search:</p>
         
-                    <form action="#" className="form-search d-flex align-items-stretch mb-3" data-aos="fade-up" data-aos-delay="200">
-                      <input type="text" className="form-control placeholder-glow text-primary" placeholder="Search for an event ..." required />
-                      <button type="submit" className="btn btn-success px-4">Search</button>
-                    </form>
+                    <CustomForm/>
         
                     <div className="row gy-4 text-secondary"  data-aos="fade-up" data-aos-delay="300">
-        
                       <div className="col-lg-3 col-6 ">
                         <div className="stats-item text-center w-100 h-100 ">
                           <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="0" className="purecounter ">232</span>
@@ -160,39 +228,36 @@ export default function MainComponent(){
      */}
         
         <section id="services" className="services section bg-light">
-            <div className="container section-title " data-aos="fade-up">
-                <span>Top Categories</span>
-                <h2>Top Categories</h2>
+            <div className="section-title " data-aos="fade-up">
+                <span>Top Events</span>
+                <h2>Top Events</h2>
                 <p>Find out best events, activities and entertaiment meetings that fit best for you.</p>
             </div>
-            <div className="container">
-                <div className="row  ">
-                    <section id="gallery" className="bg-light">
-                        <div className="container">
-                            
-                            <div className="row  d-flex flex-row justify-content-start">
-                                <LoadComponentExtension
-                                    Component={CardsGallery}
-                                    ComponentProps={{
-                                        Child: CategoryCard 
-                                    }}
-                                    ComponentSkeleton= {CardsGallerySkeleton}
-                                    Endpoint= {"/api/test"}
-                                    fetchProps= {
-                                        {
-                                            cache: 'no-store',
-                                            headers: {
-                                                'Cache-Control': 'no-cache',
-                                                'Pragma': 'no-cache',
-                                            },
-                                      }
-                                    } 
-                                />
-                            </div>
-
-                        </div>
-                    </section>
-                </div>
+            <div className="bg-light m-0 p-0">
+                <LoadComponentExtension
+                    Component={CardsGallery}
+                    ComponentProps={{
+                        Child: CategoryCard, 
+                        Name: "TopPosts"
+                    }}
+                    ComponentSkeleton={CardsGallerySkeleton}
+                    Endpoint={"/api/events"}
+                    fetchProps = {{
+                        cache: 'no-store',
+                        method:"POST",
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Cache-Control': 'no-cache',
+                            'Pragma': 'no-cache',
+                        },
+                        body: JSON.stringify({
+                          PaginationOptions:{
+                              PageSize: 3,
+                              CurrentPage: 1,
+                          }
+                        }),
+                    }}
+                />
             </div>
         </section>
         
@@ -363,103 +428,7 @@ export default function MainComponent(){
         </section>
      */}
         
-        {/* <section id="testimonials" className="testimonials section dark-background">
-    
-          <Image src="assets/img/testimonials-bg.jpg" className="testimonials-bg" alt=""/>
-    
-          <div className="container" data-aos="fade-up" data-aos-delay="100">
-    
-            <div className="swiper init-swiper">
-              
-              <div className="swiper-wrapper">
-    
-                <div className="swiper-slide">
-                  <div className="testimonial-item">
-                    <Image src="assets/img/testimonials/testimonials-1.jpg" className="testimonial-Image" alt=""/>
-                    <h3>Saul Goodman</h3>
-                    <h4>Ceo &amp; Founder</h4>
-                    <div className="stars">
-                      <i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i>
-                    </div>
-                    <p>
-                      <i className="bi bi-quote quote-icon-left"></i>
-                      <span>Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.</span>
-                      <i className="bi bi-quote quote-icon-right"></i>
-                    </p>
-                  </div>
-                </div>
-    
-                <div className="swiper-slide">
-                  <div className="testimonial-item">
-                    <Image src="assets/img/testimonials/testimonials-2.jpg" className="testimonial-Image" alt=""/>
-                    <h3>Sara Wilsson</h3>
-                    <h4>Designer</h4>
-                    <div className="stars">
-                      <i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i>
-                    </div>
-                    <p>
-                      <i className="bi bi-quote quote-icon-left"></i>
-                      <span>Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.</span>
-                      <i className="bi bi-quote quote-icon-right"></i>
-                    </p>
-                  </div>
-                </div>
-    
-                <div className="swiper-slide">
-                  <div className="testimonial-item">
-                    <Image src="assets/img/testimonials/testimonials-3.jpg" className="testimonial-Image" alt=""/>
-                    <h3>Jena Karlis</h3>
-                    <h4>Store Owner</h4>
-                    <div className="stars">
-                      <i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i>
-                    </div>
-                    <p>
-                      <i className="bi bi-quote quote-icon-left"></i>
-                      <span>Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.</span>
-                      <i className="bi bi-quote quote-icon-right"></i>
-                    </p>
-                  </div>
-                </div>
-    
-                <div className="swiper-slide">
-                  <div className="testimonial-item">
-                    <Image src="assets/img/testimonials/testimonials-4.jpg" className="testimonial-Image" alt=""/>
-                    <h3>Matt Brandon</h3>
-                    <h4>Freelancer</h4>
-                    <div className="stars">
-                      <i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i>
-                    </div>
-                    <p>
-                      <i className="bi bi-quote quote-icon-left"></i>
-                      <span>Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.</span>
-                      <i className="bi bi-quote quote-icon-right"></i>
-                    </p>
-                  </div>
-                </div>
-    
-                <div className="swiper-slide">
-                  <div className="testimonial-item">
-                    <Image src="assets/img/testimonials/testimonials-5.jpg" className="testimonial-Image" alt=""/>
-                    <h3>John Larson</h3>
-                    <h4>Entrepreneur</h4>
-                    <div className="stars">
-                      <i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i>
-                    </div>
-                    <p>
-                      <i className="bi bi-quote quote-icon-left"></i>
-                      <span>Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.</span>
-                      <i className="bi bi-quote quote-icon-right"></i>
-                    </p>
-                  </div>
-                </div>
-    
-              </div>
-              <div className="swiper-pagination"></div>
-            </div>
-    
-          </div>
-    
-        </section> */}
+        
     
         
         <section id="faq" className="faq section">
@@ -479,9 +448,10 @@ export default function MainComponent(){
                     <LoadComponentExtension
                         Component={CardsGallery}
                         ComponentProps={{
-                            Child: DropdownTextCard 
+                            Child: AccordionCard,
+                            Name: "Faqs"
                         }}
-                        ComponentSkeleton={CardsGallerySkeleton}
+                        ComponentSkeleton={AccordionGallerySkeleton}
                         Endpoint={"/api/faqs"}
                     />
 

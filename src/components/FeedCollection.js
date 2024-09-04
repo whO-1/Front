@@ -3,7 +3,7 @@ import { useEffect, useState,useRef } from "react";
 import {  Container, Row, Spinner } from "react-bootstrap";
 import Card from "@/components/cards/CategoryCard";
 import Link from "next/Link";
-import Pagination from "./Pagination";
+import Pagination from "./pagination/Pagination";
 const apiUrl = process.env.NEXT_PUBLIC_FETCH_API_URL;
 
 export default function FeedCollection (){

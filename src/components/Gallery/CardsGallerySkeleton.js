@@ -3,7 +3,7 @@ import styles from './CardsGallerySkeleton.module.css';
 
 export default function CardsGallerySkeleton(){
     return (
-        <section id="gallery" className={styles['bg-light']}>
+        <section id="gallery" className="bg-light">
             <div className="container">
                 <div className="row d-flex flex-row justify-content-center">
                     {Array.from({ length: 3 }).map((_, index) => (

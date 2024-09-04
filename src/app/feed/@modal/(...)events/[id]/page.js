@@ -1,4 +1,4 @@
-import EventCard from "@/components/eventCard/EventCard";
+import EventCard from "@/components/cards/EventCard";
 import { Modal } from "./modal";
 import HideScrollbar from "@/components/HideScrollbar";
 

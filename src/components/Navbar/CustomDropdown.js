@@ -9,7 +9,6 @@ export default function CustomDropdown ({props}) {
     const isDropdown = (head) => ( state.current.props.sublinks.filter( el => el.HeadId === head.Id ).length > 0)? true:false;
     const sublinks = ( head ) => state.current.props.sublinks.filter( el => el.HeadId === head.Id); 
     const dropdownMobile = (e) => {
-        console.log("click")
         e.preventDefault();
         e.currentTarget.parentNode.classList.toggle('active');
         e.currentTarget.parentNode.nextElementSibling.classList.toggle('dropdown-active');

@@ -2,35 +2,37 @@
 import CardBase from "@/components/cards/template/CardBase";
 import { InheritsFrom } from "@/helpers/ClassHelpers";
 import { useRef } from "react";
+const apiUrl = process.env.NEXT_PUBLIC_FETCH_API_URL;
 
 export default function CardsGallery({ props }) {
     const GenericCard = props.Child;
-    const lineLength = props.LineLength;
-    const childProps = {
-        Title: "Nature",
-        Description: "Cumque eos in qui numquam. Aut aspernatur perferendis sed atque quia voluptas quisquam repellendus temporibus itaque officiis odit",
-        Img_Url: "https://images.unsplash.com/photo-1477862096227-3a1bb3b08330?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60"
-    };
-    const state = useRef({
-        props
+    const Props = useRef({
+        ...props,
     });
-    
-    
     if(  InheritsFrom(GenericCard , CardBase)  ){
         return(
             <>
                 {  
-                    (state.current.props.error === null && state.current.props.data !== null)?
-                        state.current.props.data.Records.map(element => {
-                            return ( <GenericCard 
-                                        Title={element.Title} 
-                                        Description={element.Description} 
-                                        Img_Url={element.Img_Url} 
-                                        key={element.FaqId}
-                                    />)
-                        })
+                    (Props.current.error === null && Props.current.data !== null)?
+                        <div className="col-12 d-flex flex-row justify-content-center pb-5 m-0 " >
+                            <div className="container row" > 
+                                
+                                {Props.current.data.Records.map((element, index) => {
+                                    return ( 
+                                        <GenericCard 
+                                            Title={element.Title} 
+                                            Description={element.Description} 
+                                            Img_Url={ (element.EventImages && element.EventImages.length > 0 )? `${apiUrl}/api/image/${element.EventImages[0]}` : "/assets/img/quote-bg.jpg"} 
+                                            key={Props.current.Name + index}
+                                            Id={element.Id}
+                                        />)
+                                })}
+
+                            </div>
+                        </div>
+                        
                     :
-                        <div> Something went wrong, no data avialable ...</div>
+                        <div> Something went wrong, no data available ...</div>
                 } 
             </>
         );
